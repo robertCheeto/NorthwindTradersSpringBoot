@@ -31,22 +31,34 @@ public class NorthwindApplicationCLI implements CommandLineRunner {
             keyboard.nextLine();
 
             switch (input) {
-                case 1 -> productDAO.getAll().forEach(System.out::println);
+                case 1 -> {
+                    System.out.println("\n+-+-+-+-+-+-+-+-+-+-+-+-+\n");
+                    productDAO.getAll().forEach(System.out::println);
+                    System.out.println("\n+-+-+-+-+-+-+-+-+-+-+-+-+\n");
+                }
                 case 2 -> {
+                    System.out.println("\n+-+-+-+-+-+-+-+-+-+-+-+-+\n");
                     System.out.print("Enter product id: ");
                     int productID = keyboard.nextInt();
                     keyboard.nextLine();
+
                     System.out.print("\nEnter product name: ");
                     String productName = keyboard.nextLine();
+
                     System.out.print("\nEnter product category: ");
                     String productCategory = keyboard.nextLine();
+
                     System.out.print("\nEnter product price: $");
                     double productPrice = keyboard.nextDouble();
                     keyboard.nextLine();
+
+                    System.out.println("\n+-+-+-+-+-+-+-+-+-+-+-+-+\n");
+
                     productDAO.add(new Product(productID, productName, productCategory, productPrice));
                 }
                 case 3 -> {
-                    System.out.println("closing program");
+                    System.out.println("\n+-+-+-+-+-+-+-+-+-+-+-+-+");
+                    System.out.println("Closing program...\n+-+-+-+-+-+-+-+-+-+-+-+-+");
                     isRunning = false;
                     keyboard.close();
                     System.exit(0);
