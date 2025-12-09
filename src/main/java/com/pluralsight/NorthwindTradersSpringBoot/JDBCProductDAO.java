@@ -29,18 +29,19 @@ public class JDBCProductDAO implements ProductDAO{
 
     @Override
     public List<Product> getAll() {
-        String query = "SELECT * FROM products;";
+        String query = "SELECT * FROM products";
         try (Connection connection = dataSource.getConnection()){
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rows = statement.executeQuery();
 
             while (rows.next()) {
-                this.products.add(new Product(rows.getString(1), rows.getString(2)
-                        rows.getString(3), rows.getString(4)));
+                this.products.add(new Product(rows.getInt(1), rows.getString(2),
+                        rows.getString(3), rows.getDouble(4)));
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return this.products;
     }
 }
