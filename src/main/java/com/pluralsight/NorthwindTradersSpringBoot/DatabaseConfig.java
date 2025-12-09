@@ -10,22 +10,18 @@ import javax.sql.DataSource;
 
 @Configuration
 public class DatabaseConfig {
-    private BasicDataSource basicDataSource;
 
     @Bean
-    public DataSource dataSource() {
-        return basicDataSource;
-    }
+    public DataSource dataSource(@Value("${datasource.url") String url,
+        @Value("${datasource.username") String username,
+        @Value("${datasource.password") String password) {
 
-    @Autowired
-    public DatabaseConfig(@Value("${datasource.url") String url,
-                          @Value("${datasource.username") String username,
-                          @Value("${datasource.password") String password) {
-        basicDataSource = new BasicDataSource();
+        BasicDataSource basicDataSource = new BasicDataSource();
+
         basicDataSource.setUrl(url);
         basicDataSource.setUsername(username);
         basicDataSource.setPassword(password);
 
-        System.out.printf("url: %s \tusername: %s \tpassword: %s", url, username, password);
+        return basicDataSource;
     }
 }

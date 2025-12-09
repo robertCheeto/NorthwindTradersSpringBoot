@@ -4,29 +4,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class JDBCProductDAO implements ProductDAO{
-
-    //private final ProductDAO productDAO;
-    private final DataSource dataSource;
+    private List<Product> products;
+    private DataSource dataSource;
 
     @Autowired
     public JDBCProductDAO(DataSource dataSource) {
         this.dataSource = dataSource;
+        this.products = new ArrayList<>();
     }
-
-    @Autowired
-
 
     @Override
     public void add(Product product) {
-
+        this.products.add(product);
     }
 
     @Override
     public List<Product> getAll() {
-        return List.of();
+        String query = "SELECT * FROM products;";
+        try (Connection connection = dataSource.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet rows = statement.executeQuery();
+
+            while (rows.next()) {
+                this.products.add(new Product(rows.getString(1), rows.getString(2)
+                        rows.getString(3), rows.getString(4)));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
