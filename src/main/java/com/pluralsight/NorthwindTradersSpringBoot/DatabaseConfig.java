@@ -12,9 +12,9 @@ import javax.sql.DataSource;
 public class DatabaseConfig {
 
     @Bean
-    public DataSource dataSource(@Value("${datasource.url") String url,
-        @Value("${datasource.username") String username,
-        @Value("${datasource.password") String password) {
+    public DataSource dataSource(@Value("${datasource.url}") String url,
+        @Value("${datasource.username}") String username,
+        @Value("${datasource.password}") String password) {
 
         BasicDataSource basicDataSource = new BasicDataSource();
 
