@@ -29,7 +29,10 @@ public class JDBCProductDAO implements ProductDAO{
 
     @Override
     public List<Product> getAll() {
-        String query = "SELECT * FROM products";
+        String query = "SELECT P.ProductID, P.ProductName, C.CategoryName, P.UnitPrice " +
+                "FROM products AS P " +
+                "JOIN categories AS C ON (C.CategoryID = P.CategoryID) " +
+                "ORDER BY P.ProductID;";
         try (Connection connection = dataSource.getConnection()){
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rows = statement.executeQuery();
